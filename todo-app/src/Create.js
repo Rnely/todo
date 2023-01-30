@@ -1,39 +1,59 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import LocalStorage from "./LocalStorage"
 
 const Create = () => {
-    const [name, setName] = LocalStorage('name', '')
-    const [desc, setDesc] = LocalStorage('desc', '')
-    const [date, setDate] = LocalStorage('date', '')
+    const [tasks, setTasks] = useState(() => {
+        const savedTasks = localStorage.getItem("tasks")
+        if (savedTasks) {
+            return JSON.parse(savedTasks)
+        } else {
+            return []
+        }
+    })
+    const [taskEditing, setTaskEditing] = useState("")
+
+    useEffect(() => {
+        const json = JSON.stringify(tasks);
+        localStorage.setItem("tasks", json);
+      }, [tasks]);
+
+    const addTask = (e) => {
+        e.preventDefault();
+        const newTask = {
+          id: tasks.length + 1 ,
+          name: e.target.name.value,
+          desc: e.target.desc.value,
+          date: e.target.date.value
+        };
+        setTasks([...tasks, newTask]);
+        e.target.task.value = "";
+      };
 
     return (
         <div className="create">
             <h2>Add a New Task</h2>
-            <form>
+            <form onSubmit={addTask}>
                 <label>Task Name:</label>
                 <input 
                     type="text"
                     required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    name="name"
                 />
                 <label>Task Description:</label>
                 <textarea 
                     required
-                    value={desc}
-                    onChange={(e) => setDesc(e.target.value)}
+                    name="desc"
                 />
                 <label>Date:</label>
                 <input 
                     type="date"
                     required
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    name="date"
                 />
+                <input type="Submit" />
             </form>
         </div>
     )
-
 }
 
 export default Create;
