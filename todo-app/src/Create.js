@@ -1,5 +1,5 @@
+import { useState } from "react"
 import LocalStorage from "./LocalStorage"
-
 
 const Create = () => {
     const [name, setName] = LocalStorage('name', '')
