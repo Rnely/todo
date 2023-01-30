@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const getSavedValue = () => {
-    const savedValue = JSON.parse(local.Storage.getItem(kye))
+    const savedValue = JSON.parse(localStorage.getItem(key))
     if (savedValue) return savedValue
 
     if (initalValue instanceof Function) return initalValue()
