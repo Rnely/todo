@@ -26,7 +26,6 @@ const Create = () => {
     const addTask = (e) => {
         e.preventDefault();
         const newTask = {
-          id: tasks.length + 1 ,
           name,
           desc,
           date
