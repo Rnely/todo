@@ -11,32 +11,25 @@ const Create = () => {
             return []
         }
     })
+
     const [taskEditing, setTaskEditing] = useState("")
     const navigate = useNavigate();
     const [ name, setName] = useState('');
     const [ desc, setDesc] = useState('');
     const [ date, setDate] = useState('');
-    const ttt = tasks.length
 
     useEffect(() => {
         const json = JSON.stringify(tasks);
         localStorage.setItem("tasks", json);
-        console.log(ttt)
       }, [tasks]);
 
     const addTask = (e) => {
         e.preventDefault();
-        const tt = tasks.length
         const newTask = {
           id: tasks.length + 1 ,
           name,
           desc,
           date
-          /*
-          name: e.target.name.value,
-          desc: e.target.desc.value,
-          date: e.target.date.value
-          */
         };
         setTasks([...tasks, newTask])
       };
@@ -49,14 +42,12 @@ const Create = () => {
                 <input 
                     type="text"
                     required
-                    name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
                 <label>Task Description:</label>
                 <textarea 
                     required
-                    name="desc"
                     value={desc}
                     onChange={(e) => setDesc(e.target.value)}
                 />
@@ -64,7 +55,6 @@ const Create = () => {
                 <input 
                     type="date"
                     required
-                    name="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                 />
