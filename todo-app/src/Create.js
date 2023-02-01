@@ -11,7 +11,7 @@ const Create = () => {
             return []
         }
     })
-    const [task, setTodo] = useState(() => {
+    const [task, setTask] = useState(() => {
         return (tasks)
     });
 
@@ -31,28 +31,55 @@ const Create = () => {
     const [ desc, setDesc] = useState('');
     const [ date, setDate] = useState('');
 
+    const [ editName, setEditName] = useState('');
+    const [ editDesc, setEditDesc] = useState('');
+    const [ editDate, setEditDate] = useState('');
+
     const [ edit, setEdit] = useState(true);
     const [ currentTask, setCurrentTask ] = useState({});
 
     useEffect(() => {
-        const json = JSON.stringify(tasks);
+        const json = JSON.stringify(task);
         localStorage.setItem("tasks", json);
       }, [tasks]);
 
     const addTask = (e) => {
         e.preventDefault();
         const newTask = {
-          name,
-          desc,
-          date
+            id: tasks.length + 1,
+            name,
+            desc,
+            date
         };
         setTasks([...tasks, newTask])
       };
 
+    /* const updateTask = () => {
+        let taskk = JSON.parse(localStorage.getItem("tasks"))
+
+        const updatedTask = taskk.map(item => {
+            if(item === editInd) {
+                updatedTask = {name, desc, date}
+            }
+            return item;
+        })
+        setTasks([...tasks, updatedTask])
+    }
+    */
+
+    const updateTask2 = (e) => {
+        e.preventDefault()
+        task[editInd] = {name, desc, date}
+        console.log(task)
+        tasks[editInd] = {name, desc, date}
+        console.log(tasks)
+
+    }
+
     if(taskEditing === 'true') {
         return (
             <div className="create">
-                <form onSubmit={addTask}>
+                <form onSubmit={updateTask2}>
                     <h2>Edit a task</h2>
                     <label>Task name:</label>
                     <input
