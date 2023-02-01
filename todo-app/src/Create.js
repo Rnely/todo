@@ -11,12 +11,26 @@ const Create = () => {
             return []
         }
     })
+    const [task, setTodo] = useState("");
 
-    const [taskEditing, setTaskEditing] = useState("")
+    const [taskEditing, setTaskEditing] = useState(() => {
+        const editState = localStorage.getItem("edit")
+        if(editState === true){
+            return(editState)
+        } else {
+            return(editState)
+        }
+    })
+
+    const editInd = JSON.parse(localStorage.getItem('editIndex'))
+
     const navigate = useNavigate();
     const [ name, setName] = useState('');
     const [ desc, setDesc] = useState('');
     const [ date, setDate] = useState('');
+
+    const [ edit, setEdit] = useState(true);
+    const [ currentTask, setCurrentTask ] = useState({});
 
     useEffect(() => {
         const json = JSON.stringify(tasks);
@@ -33,35 +47,67 @@ const Create = () => {
         setTasks([...tasks, newTask])
       };
 
-    return (
-        <div className="create">
-            <h2>Add a New Task</h2>
-            <form onSubmit={addTask}>
-                <label>Task Name:</label>
-                <input 
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <label>Task Description:</label>
-                <textarea 
-                    required
-                    value={desc}
-                    onChange={(e) => setDesc(e.target.value)}
-                />
-                <label>Date:</label>
-                <input 
-                    type="date"
-                    required
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                />
-                <button type="button" onClick={addTask}>Save</button>
-                <button type="button" onClick={() => navigate("/")}>Cancel</button>
-            </form>
-        </div>
-    )
+    if(taskEditing === 'true') {
+        return (
+            <div className="create">
+                <form onSubmit={addTask}>
+                    <h2>Edit a task</h2>
+                    <label>Task name:</label>
+                    <input
+                        type="text"
+                        value={tasks[editInd].name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <label>Task Description:</label>
+                    <textarea 
+                        value={tasks[editInd].desc}
+                        onChange={(e) => setDesc(e.target.value)}
+                    />
+                    <label>Date:</label>
+                    <input 
+                        type="date"
+                        value={tasks[editInd].date}
+                        onChange={(e) => setDate(e.target.value)}
+                    />
+                    <button type="submit">Update</button>
+                    <button onClick={() => setTaskEditing(false)}>Cancel</button>
+                </form>
+            </div>
+        )
+                        
+    } else {
+        return (
+            <div className="create">
+                <form onSubmit={addTask}>
+                    <h2>Add a New Task</h2>
+                    <label>Task Name:</label>
+                    <input 
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <label>Task Description:</label>
+                    <textarea 
+                        required
+                        value={desc}
+                        onChange={(e) => setDesc(e.target.value)}
+                    />
+                    <label>Date:</label>
+                    <input 
+                        type="date"
+                        required
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                    />
+                    <button type="button" onClick={addTask}>Save</button>
+                    <button type="button" onClick={() => navigate("/")}>Cancel</button>
+                </form>   
+ 
+            </div>
+        )
+    }
+
 }
 
 export default Create;

@@ -1,11 +1,27 @@
-import { Link } from "react-router-dom";
-import { useEffect, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useReducer, useState } from "react";
+import Create from "./Create";
 
 const TaskList = () => {
 
     const tt = JSON.parse(localStorage.getItem('tasks'))
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
+
+    const [ edit, setEdit] = useState(false)
+    const [editIndex, setEditIndex] = useState('')
+    
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const json = JSON.stringify(edit);
+        localStorage.setItem("edit", json);
+        const json2 = JSON.stringify(editIndex);
+        localStorage.setItem("editIndex", json2);
+        if(localStorage.getItem("edit") === 'true') {
+            navigate('/Create')
+        }
+    }, [edit]);
     
     return (
         <div className="home">
@@ -20,6 +36,10 @@ const TaskList = () => {
                             localStorage.setItem('tasks',JSON.stringify(tt))
                             forceUpdate()
                         }}>Delete</button>
+                        <button onClick={() => {
+                            setEdit(true)
+                            setEditIndex(index)
+                            }}>Edit</button>
                     </div>
                 )
             })}
