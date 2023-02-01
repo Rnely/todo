@@ -11,7 +11,9 @@ const Create = () => {
             return []
         }
     })
-    const [task, setTodo] = useState("");
+    const [task, setTodo] = useState(() => {
+        return (tasks)
+    });
 
     const [taskEditing, setTaskEditing] = useState(() => {
         const editState = localStorage.getItem("edit")
@@ -55,18 +57,18 @@ const Create = () => {
                     <label>Task name:</label>
                     <input
                         type="text"
-                        value={tasks[editInd].name}
+                        defaultValue={task[editInd].name}
                         onChange={(e) => setName(e.target.value)}
                     />
                     <label>Task Description:</label>
                     <textarea 
-                        value={tasks[editInd].desc}
+                        defaultValue={task[editInd].desc}
                         onChange={(e) => setDesc(e.target.value)}
                     />
                     <label>Date:</label>
                     <input 
                         type="date"
-                        value={tasks[editInd].date}
+                        defaultValue={task[editInd].date}
                         onChange={(e) => setDate(e.target.value)}
                     />
                     <button type="submit">Update</button>
