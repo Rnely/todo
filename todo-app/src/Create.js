@@ -31,22 +31,13 @@ const Create = () => {
     const [ desc, setDesc] = useState('');
     const [ date, setDate] = useState('');
 
-    const [ editName, setEditName] = useState('');
-    const [ editDesc, setEditDesc] = useState('');
-    const [ editDate, setEditDate] = useState('');
-
-    const [ edit, setEdit] = useState(true);
-    const [ currentTask, setCurrentTask ] = useState({});
-
     useEffect(() => {
-        const json = JSON.stringify(task);
-        localStorage.setItem("tasks", json);
+        localStorage.setItem("tasks", JSON.stringify(tasks))
       }, [tasks]);
 
     const addTask = (e) => {
         e.preventDefault();
         const newTask = {
-            id: tasks.length + 1,
             name,
             desc,
             date
@@ -54,25 +45,10 @@ const Create = () => {
         setTasks([...tasks, newTask])
       };
 
-    /* const updateTask = () => {
-        let taskk = JSON.parse(localStorage.getItem("tasks"))
-
-        const updatedTask = taskk.map(item => {
-            if(item === editInd) {
-                updatedTask = {name, desc, date}
-            }
-            return item;
-        })
-        setTasks([...tasks, updatedTask])
-    }
-    */
-
     const updateTask2 = (e) => {
         e.preventDefault()
-        task[editInd] = {name, desc, date}
-        console.log(task)
         tasks[editInd] = {name, desc, date}
-        console.log(tasks)
+        localStorage.setItem("tasks", JSON.stringify(tasks))
 
     }
 
