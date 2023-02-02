@@ -6,7 +6,7 @@
   font-family: "Quicksand";
   color: #333;
 }
-
+/* home styles */
 .home input {
   width: 100%;
   padding: 6px 10px;
@@ -15,7 +15,6 @@
   box-sizing: border-box;
   display: block;
 }
-
 .home label {
   text-align: left;
   display: block;
@@ -44,7 +43,6 @@
 .navbar a:hover {
   color: #f1356d;
 }
-
 .content {
   max-width: 600px;
   margin: 40px auto;
