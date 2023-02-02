@@ -47,6 +47,7 @@ const Create = () => {
 
     const updateTask2 = (e) => {
         e.preventDefault()
+        console.log(task)
         tasks[editInd] = {name, desc, date}
         localStorage.setItem("tasks", JSON.stringify(tasks))
 

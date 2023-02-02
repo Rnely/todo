@@ -13,6 +13,8 @@ const TaskList = () => {
     
     const navigate = useNavigate()
 
+    const [query, setQuery] = useState("")
+
     useEffect(() => {
         const json = JSON.stringify(edit);
         localStorage.setItem("edit", json);
@@ -25,7 +27,16 @@ const TaskList = () => {
     
     return (
         <div className="home">
-            {tt.map((task, index) => {
+            <label>Search For a Task:</label>
+            <input placeholder="Enter Task Name" onChange={event => setQuery(event.target.value)} />
+            {
+            tt.filter(tasks => {
+                if(query === '') {
+                    return tasks;
+                } else if (tasks.name.toLowerCase().includes(query.toLowerCase())){
+                    return tasks
+                }
+            }).map((task, index) => {
                 return (
                     <div className="task-preview" key={index}>
                         <h2>Task Name: {task.name}</h2>
