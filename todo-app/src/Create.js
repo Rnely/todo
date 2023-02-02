@@ -11,10 +11,8 @@ const Create = () => {
             return []
         }
     })
-    const [task, setTask] = useState(() => {
-        return (tasks)
-    });
 
+    const [createTask, setCreateTask] = useState(true)
     const [taskEditing, setTaskEditing] = useState(() => {
         const editState = localStorage.getItem("edit")
         if(editState === true){
@@ -33,6 +31,9 @@ const Create = () => {
 
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks))
+        if(!createTask) {
+            navigate('/')
+        }
       }, [tasks]);
 
     const addTask = (e) => {
@@ -43,40 +44,45 @@ const Create = () => {
             date
         };
         setTasks([...tasks, newTask])
+        setCreateTask(false)
       };
 
     const updateTask2 = (e) => {
         e.preventDefault()
-        console.log(task)
         tasks[editInd] = {name, desc, date}
         localStorage.setItem("tasks", JSON.stringify(tasks))
+        setTaskEditing(false)
+        if(taskEditing) {
+            navigate('/')
+        }
 
     }
 
     if(taskEditing === 'true') {
         return (
             <div className="create">
-                <form onSubmit={updateTask2}>
+                <form name="edit" onSubmit={updateTask2}>
                     <h2>Edit a task</h2>
                     <label>Task name:</label>
                     <input
                         type="text"
-                        defaultValue={task[editInd].name}
+                        name="name"
+                        defaultValue={tasks[editInd].name}
                         onChange={(e) => setName(e.target.value)}
                     />
                     <label>Task Description:</label>
                     <textarea 
-                        defaultValue={task[editInd].desc}
+                        defaultValue={tasks[editInd].desc}
                         onChange={(e) => setDesc(e.target.value)}
                     />
                     <label>Date:</label>
                     <input 
                         type="date"
-                        defaultValue={task[editInd].date}
+                        defaultValue={tasks[editInd].date}
                         onChange={(e) => setDate(e.target.value)}
                     />
                     <button type="submit">Update</button>
-                    <button onClick={() => setTaskEditing(false)}>Cancel</button>
+                    <button onClick={() => navigate('/')}>Cancel</button>
                 </form>
             </div>
         )
