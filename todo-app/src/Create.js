@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import LocalStorage from "./LocalStorage"
 import { useNavigate } from "react-router-dom"
 
 const Create = () => {
@@ -45,10 +44,14 @@ const Create = () => {
         };
         setTasks([...tasks, newTask])
         setCreateTask(false)
+        if(!createTask) {
+            navigate('/')
+        }
       };
 
-    const updateTask2 = (e) => {
+    const updateTask = (e) => {
         e.preventDefault()
+        console.log(tasks[editInd].name)
         tasks[editInd] = {name, desc, date}
         localStorage.setItem("tasks", JSON.stringify(tasks))
         setTaskEditing(false)
@@ -61,12 +64,11 @@ const Create = () => {
     if(taskEditing === 'true') {
         return (
             <div className="create">
-                <form name="edit" onSubmit={updateTask2}>
+                <form onSubmit={updateTask}>
                     <h2>Edit a task</h2>
                     <label>Task name:</label>
                     <input
                         type="text"
-                        name="name"
                         defaultValue={tasks[editInd].name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -112,7 +114,7 @@ const Create = () => {
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                     />
-                    <button type="button" onClick={addTask}>Save</button>
+                    <button type="submit">Save</button>
                     <button type="button" onClick={() => navigate("/")}>Cancel</button>
                 </form>   
  
