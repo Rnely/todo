@@ -14,7 +14,7 @@ const Create = () => {
     const [createTask, setCreateTask] = useState(true)
     const [taskEditing, setTaskEditing] = useState(() => {
         const editState = localStorage.getItem("edit")
-        if(editState === true){
+        if(editState){
             return(editState)
         } else {
             return(editState)
@@ -33,6 +33,18 @@ const Create = () => {
         if(!createTask) {
             navigate('/')
         }
+        if(taskEditing === 'true') {
+            if(name === "" ) {
+                setName(tasks[editInd].name)
+        }
+            if(desc === "" ) {
+                setDesc(tasks[editInd].desc)
+        }
+            if(date === "" ) {
+                setDate(tasks[editInd].date)
+        }
+        }
+        
       }, [tasks]);
 
     const addTask = (e) => {
@@ -51,7 +63,6 @@ const Create = () => {
 
     const updateTask = (e) => {
         e.preventDefault()
-        console.log(tasks[editInd].name)
         tasks[editInd] = {name, desc, date}
         localStorage.setItem("tasks", JSON.stringify(tasks))
         setTaskEditing(false)
