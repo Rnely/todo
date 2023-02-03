@@ -77,8 +77,12 @@
   color: #fff;
   border: 0;
   padding: 8px;
+  margin-right: 6px;
   border-radius: 8px;
   cursor: pointer;
+}
+.create button:hover {
+  background: #bb315a;
 }
 
 /* task previews / list */
@@ -95,4 +99,16 @@
 }
 .task-preview a{
   text-decoration: none;
+}
+.task-preview button {
+  background: #f1356d;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  margin-right: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.task-preview button:hover {
+  background: #bb315a;
 }
